@@ -1,55 +1,43 @@
+import os
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TODO.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db_path = os.path.join("/tmp", "todo.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
 db = SQLAlchemy(app)
 
-class Todo(db.Model):   
-    sno = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    desc = db.Column(db.String(500), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+class Todo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(200), nullable=False)
 
-    def __repr__(self) -> str:
-        return f"{self.sno} - {self.title}"
+with app.app_context():
+    db.create_all()
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
-        title = request.form['title']
-        desc = request.form['desc']
-        todo = Todo(title=title, desc=desc)
-        db.session.add(todo)
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        task_content = request.form["content"]
+        new_task = Todo(content=task_content)
+        db.session.add(new_task)
         db.session.commit()
-        return redirect('/')   
+        return redirect("/")
+    tasks = Todo.query.all()
+    return render_template("index.html", tasks=tasks)
 
-    allTodos = Todo.query.all()
-    return render_template('index.html', allTodos=allTodos)
-
-@app.route('/update/<int:sno>', methods=['GET', 'POST'])
-def update(sno):
-    todo = Todo.query.filter_by(sno=sno).first()
-    if request.method == 'POST':
-        todo.title = request.form['title']
-        todo.desc = request.form['desc']
+@app.route("/update/<int:id>", methods=["GET", "POST"])
+def update(id):
+    task = Todo.query.get_or_404(id)
+    if request.method == "POST":
+        task.content = request.form["content"]
         db.session.commit()
-        return redirect('/')
-    return render_template('update.html', todo=todo)
+        return redirect("/")
+    return render_template("update.html", task=task)
 
-@app.route('/delete/<int:sno>')
-def delete(sno):
-    todo = Todo.query.filter_by(sno=sno).first()
-    db.session.delete(todo)
+@app.route("/delete/<int:id>")
+def delete(id):
+    task = Todo.query.get_or_404(id)
+    db.session.delete(task)
     db.session.commit()
-    return redirect('/')
+    return redirect("/")
 
-if __name__ == "__main__":
-    
-    with app.app_context():
-        db.create_all()
-
-    app.run(debug=True, port=8000)
