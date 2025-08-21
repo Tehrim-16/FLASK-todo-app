@@ -1,77 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Task</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            margin-top: 50px;
-            padding: 20px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 400px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            gap: 10px;
-        }
-        input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #218838;
-        }
-        a {
-            display: inline-block;
-            margin-top: 15px;
-            text-decoration: none;
-            color: #007bff;
-            font-size: 14px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Update Task</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Update Task</h1>
-        <form method="POST">
-            <input type="text" name="task" value="{{ task.task }}" required>
-            <button type="submit">Update</button>
-        </form>
-        <a href="/">Back</a>
-    </div>
+  <h1>Update Task</h1>
+  <form method="POST">
+    <input type="text" name="task" value="{{ task.content }}" required>
+    <button type="submit">Update</button>
+  </form>
+  <a href="/">Back</a>
 </body>
 </html>
