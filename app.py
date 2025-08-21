@@ -25,6 +25,17 @@ def add():
     db.session.commit()
     return redirect(url_for("index"))
 
+@app.route("/update/<int:id>", methods=["GET", "POST"])
+def update(id):
+    task = Task.query.get_or_404(id)
+    if request.method == "POST":
+        task.task = request.form["task"]
+        db.session.commit()
+        return redirect("/")
+    else:
+        return render_template("update.html", task=task)
+
+
 @app.route("/delete/<int:id>")
 def delete(id):
     task = Task.query.get_or_404(id)
