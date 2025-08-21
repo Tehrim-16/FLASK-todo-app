@@ -1,68 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
-  <title>My TO-DO</title>
+    <meta charset="UTF-8">
+    <title>To-Do App</title>
 </head>
-
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">TO-DO List</a>
-  </nav>
+    <h1>My To-Do List</h1>
 
-  <!-- Form -->
-  <div class="container my-4">
-    <h2>Add a TO-DO</h2>
-    <form action="/" method="POST">
-      <div class="form-group">
-        <label for="title">TO-DO Title</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Add your task">
-      </div>
-      <div class="form-group">
-        <label for="desc">TO-DO Description</label>
-        <input type="text" class="form-control" id="desc" name="desc" placeholder="Enter Description">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+    <form method="POST" action="/add">
+        <input type="text" name="task" placeholder="Enter a task" required>
+        <button type="submit">Add</button>
     </form>
-  </div>
 
-  <!-- Table -->
-  <div class="container my-4">
-    <h2>Your TO-DOs</h2>
-    {% if allTodos|length == 0 %}
-      <div class="alert alert-dark">No tasks yet! Add one above 👆</div>
-    {% else %}
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">S.No</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Date Created</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for todo in allTodos %}
-          <tr>
-            <th scope="row">{{ loop.index }}</th>
-            <td>{{ todo.title }}</td>
-            <td>{{ todo.desc }}</td>
-            <td>{{ todo.date_created.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td>
-              <a href="/update/{{todo.sno}}" class="btn btn-sm btn-outline-info">Update</a>
-              <a href="/delete/{{todo.sno}}" class="btn btn-sm btn-outline-danger">Delete</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% endif %}
-  </div>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.content }}
+                <a href="/delete/{{ task.id }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
+
