@@ -1,25 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>To-Do App</title>
 </head>
 <body>
     <h1>My To-Do List</h1>
-
     <form method="POST" action="/add">
         <input type="text" name="task" placeholder="Enter a task" required>
         <button type="submit">Add</button>
     </form>
-
     <ul>
         {% for task in tasks %}
-            <li>
-                {{ task.content }}
-                <a href="/delete/{{ task.id }}">Delete</a>
-            </li>
+            <li>{{ task.content }} <a href="/delete/{{ task.id }}">Delete</a></li>
         {% endfor %}
     </ul>
 </body>
 </html>
-
