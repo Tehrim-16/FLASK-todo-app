@@ -1,100 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            margin-top: 50px;
-            padding: 20px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 400px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            gap: 10px;
-        }
-        input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-        li {
-            background: #f8f9fa;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .actions a {
-            margin-left: 10px;
-            text-decoration: none;
-            color: #007bff;
-            font-size: 14px;
-        }
-        .actions a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    form input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+    form button {
+      padding: 10px 20px;
+      border: none;
+      background: #28a745;
+      color: white;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    form button:hover {
+      background: #218838;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin: auto;
+    }
+    li {
+      background: #ffffff; 
+      color: #333333;      
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .actions a {
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-left: 8px;
+      transition: 0.2s;
+    }
+    .actions a:first-child {
+      background: #007bff;
+      color: white;
+    }
+    .actions a:first-child:hover {
+      background: #0056b3;
+    }
+    .actions a:last-child {
+      background: #dc3545;
+      color: white;
+    }
+    .actions a:last-child:hover {
+      background: #a71d2a;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Todo App</h1>
-        <form method="POST" action="/add">
-            <input type="text" name="task" placeholder="Enter a task" required>
-            <button type="submit">Add</button>
-        </form>
-        <ul>
-            {% for task in tasks %}
-                <li>
-                    {{ task.task }}
-                    <div class="actions">
-                        <a href="/update/{{ task.id }}">Update</a>
-                        <a href="/delete/{{ task.id }}">Delete</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+  <h1>My Todo List</h1>
+  <form method="POST" action="/add">
+    <input type="text" name="task" placeholder="Enter a task" required>
+    <button type="submit">Add</button>
+  </form>
+  <ul>
+    {% for task in tasks %}
+    <li>
+      {{ task.content }}
+      <span class="actions">
+        <a href="/update/{{ task.id }}">Update</a>
+        <a href="/delete/{{ task.id }}">Delete</a>
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
 </body>
 </html>
+
